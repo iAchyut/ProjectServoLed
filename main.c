@@ -7,7 +7,7 @@
 #define SERVO_MAX			2700	// The maximum duty cycle
 unsigned int PWM_Period		= (MCU_CLOCK / PWM_FREQUENCY);	// PWM Period
 unsigned int PWM_Duty		= 0;							// %
-
+unsigned int i=0;
 //Definition of the notes' frequecies in Hertz.
 #define c 261
 #define d 294
@@ -245,6 +245,62 @@ void play()
     //end of the song
 }
 void main (void){
+
+
+	 WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	    P1DIR |=0b00000011;
+		P2DIR |=0b00001111;
+		unsigned int j=0;
+
+
+
+		for(j=0;j<2;j++)
+			{
+				P1OUT &=0x00;
+						P2OUT &=0x00;
+								for(i=0;i<20000;i++);
+
+								P1OUT ^=0x01;
+								for(i=0;i<50000;i++);
+
+								P2OUT ^=0x01;
+										for(i=0;i<50000;i++);
+
+										P2OUT ^=0x02;
+												for(i=0;i<50000;i++);
+
+												P2OUT ^=0x04;
+														for(i=0;i<50000;i++);
+
+														P2OUT ^=0x08;
+																for(i=0;i<50000;i++);
+			}
+
+
+		for(j=0;j<3;j++)
+				{
+					P1OUT &=0x00;
+							P2OUT &=0x00;
+									for(i=0;i<20000;i++);
+
+									P1OUT ^=0x01;
+									for(i=0;i<50000;i++);
+
+									P2OUT ^=0x08;
+											for(i=0;i<50000;i++);
+
+											P2OUT ^=0x01;
+													for(i=0;i<50000;i++);
+
+													P2OUT ^=0x04;
+															for(i=0;i<50000;i++);
+
+															P2OUT ^=0x02;
+																	for(i=0;i<50000;i++);
+				}
+
+
+
 	 WDTCTL = WDTPW + WDTHOLD; //Disable Watchdog Timer
 	    P1DIR|=BIT2;              // P1.2 output
 	    play();
@@ -290,6 +346,8 @@ void main (void){
 			TACCR1 = servo_lut[i];
 			__delay_cycles(20000);
 		}
+
+
 
    }
 
